@@ -1,0 +1,13 @@
+score_id,target,function,LinearNE
+1,iris,F1Score,
+2, ,Accuracy,
+3,sonar,F1Score,
+4, ,Accuracy,
+5,glass,F1Score,
+6, ,Accuracy,
+7,airfoil_self_noise,R2Score,0.5022643826480366
+8, ,MeanSquared,23.290553575516704
+9,winequality-red,R2Score,0.3466498994393496
+10, ,MeanSquared,0.4229760881692294
+11,winequality-white,R2Score,0.27386512104919924
+12, ,MeanSquared,0.5680161888887006
