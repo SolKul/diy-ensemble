@@ -37,12 +37,11 @@ class WeightedDecisionStump(dstump.DescisionStump):
             self,
             metric=w_infogain,
             leaf=WeightedZeroRule):
-        """
-        weightはfitメソッドの引数で、
-        学習時、fit呼び出し直後にself.weightに格納される
-        """
         super().__init__(metric=metric, leaf=leaf)
+        # weightはfitメソッドの引数で、
+        # 学習時、fit呼び出し直後にself.weightに格納される
         self.weight = None
+
 
     def make_loss(self, y1, y2, l, r):
         """
@@ -80,7 +79,7 @@ class WeightedDecisionStump(dstump.DescisionStump):
 
         return self
 
-class WeightedDecistionTree(pruning.PrunedTree, WeightedDecisionStump):
+class WeightedDecisionTree(pruning.PrunedTree, WeightedDecisionStump):
     def __init__(
             self,
             max_depth=5,
@@ -93,6 +92,14 @@ class WeightedDecistionTree(pruning.PrunedTree, WeightedDecisionStump):
             leaf=leaf,
             depth=depth)
         self.weight = None
+
+    def get_node(self):
+        #　新しくノードを作成する
+        return self.__class__(
+            max_depth=self.max_depth,
+            metric=self.metric,
+            leaf=self.leaf,
+            depth=self.depth+1)
 
     def fit(self, x, y, weight):
         self.weight = weight  # 重みの保存

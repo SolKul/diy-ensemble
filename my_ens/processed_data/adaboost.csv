@@ -1,0 +1,13 @@
+score_id,target,function,AdaBoost
+1,iris,F1Score,
+2, ,Accuracy,
+3,sonar,F1Score,0.7605813313214209
+4, ,Accuracy,0.7596153846153846
+5,glass,F1Score,
+6, ,Accuracy,
+7,airfoil_self_noise,R2Score,
+8, ,MeanSquared,
+9,winequality-red,R2Score,
+10, ,MeanSquared,
+11,winequality-white,R2Score,
+12, ,MeanSquared,

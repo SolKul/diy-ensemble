@@ -62,7 +62,7 @@ if __name__ == '__main__':
                     'tree_params': {'metric': entropy.gini}
                 }
             },
-            'regresser': {
+            'regressor': {
                 'class': bagging.Bagging,
                 'args': {
                     'n_trees': 5,
@@ -81,7 +81,7 @@ if __name__ == '__main__':
                     'tree_params': {'metric': entropy.gini}
                 }
             },
-            'regresser': {
+            'regressor': {
                 'class': bagging.Bagging,
                 'args': {
                     'n_trees': 10,
@@ -96,7 +96,7 @@ if __name__ == '__main__':
         #      'tree_params':
         #         {'metric':entropy.gini}
         #     },
-        #  'regresser':
+        #  'regressor':
         #     {'n_trees': 20,
         #      'tree_params':
         #         {'metric':entropy.deviation}
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         c_model = c_class(**eval_para['classifier']['args'])
         c_result = evaluate.evaluate_classifier(c_model)
 
-        r_class = eval_para['regresser']['class']
+        r_class = eval_para['regressor']['class']
         r_model = r_class(**eval_para['classifier']['args'])
         r_result = evaluate.evaluate_regressor(r_model)
 
