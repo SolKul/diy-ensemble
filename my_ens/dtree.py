@@ -15,11 +15,13 @@ class DecisionTree(dstump.DescisionStump):
         super().__init__(metric=metric, leaf=leaf)
         self.max_depth = max_depth
         self.depth = depth
+        self.dimensions = 0
 
     def fit(self, x, y):
         '''
         左右の葉を作成する
         '''
+        self.dimensions = x.shape[1]
         self.left = self.leaf()
         self.right = self.leaf()
 
@@ -108,6 +110,36 @@ class DecisionTree(dstump.DescisionStump):
 
     def __str__(self):
         return self.print_leaf(self)
+
+    def calc_feat_imp(self):
+        """
+        特徴量重要度を算出する
+        """
+        feat_imp_scores = np.zeros(self.dimensions)
+        self.calc_rec_imp(feat_imp_scores)
+        # 足して1になるように正規化
+        return feat_imp_scores/np.sum(feat_imp_scores)
+
+    def calc_rec_imp(self, feat_imp_scores):
+        """
+        再起関数で特徴量の重要度を算出する関数
+        """
+        # まず、同じ深さの木全体の合計スコアを算出する
+        # layer_score=2**(dt.max_depth-dt.depth)
+        # それを同じ深さの木の数で割る。
+        # my_score=layer_score/(2**(dt.depth-1))
+        # これは次の式と同じ
+        my_score = 2**(1+self.max_depth-2*self.depth)
+        # 分割に選ばれた特徴量の重要度スコアに足し合わせる。
+        feat_imp_scores[self.feat_index] += my_score
+        # もし左がDecisionTreeのインスタンスなら、
+        if isinstance(self.left, DecisionTree):
+            self.left.calc_rec_imp(feat_imp_scores)
+        # もし右がDecisionTreeのインスタンスなら、
+        if isinstance(self.right, DecisionTree):
+            self.right.calc_rec_imp(feat_imp_scores)
+        return feat_imp_scores
+
 
 '''
 split_tree_fast説明
